@@ -1,0 +1,116 @@
+<nz-layout *ngIf= "isLogged; else falsyTemplate;" class="app-layout">
+  <nz-sider class="menu-sidebar"
+            nzCollapsible
+            nzWidth="256px"
+            nzBreakpoint="md"
+            [(nzCollapsed)]="isCollapsed"
+            [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a href="https://ng.ant.design/" target="_blank">
+        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+        <h1>数据资产质量评估系统</h1>
+      </a>
+    </div>
+    <ul  nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzOpen nzTitle="数据资产" nzIcon="dashboard">
+        <ul>
+          <li *ngIf="loginstatus.user_role == 0" nz-menu-item nzMatchRouter nzSelected >
+            <a routerLink="/admin" (click)="newTab('用户管理后台')" >用户管理后台</a>
+          </li>
+          <li *ngIf="loginstatus.user_role == 0" nz-menu-item nzMatchRouter nzSelected >
+            <a routerLink="/database" (click)="newTab('数据库管理后台')" >数据库管理后台</a>
+          </li>
+          <li nz-menu-item nzMatchRouter (click)="newTab('业务数据资产看板')">
+            <a routerLink="/welcome"  >业务数据资产看板</a>
+          </li>
+          <li nz-menu-item nzMatchRouter (click)="newTab('数据资产目录')">
+            <a routerLink="/setup"  >数据资产目录</a>
+          </li>
+          <!--<li *ngIf="loginstatus.user_role == 5 || loginstatus.user_role == 0 " nz-menu-item nzMatchRouter >-->
+            <!--<a routerLink="" (click)="newTab('数据字典维护')" >数据字典维护</a>-->
+          <!--</li>-->
+
+        </ul>
+      </li>
+
+      <li nz-submenu nzTitle="数据质量分析" nzIcon="form">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dashboard" (click)="newTab('数据质量看板')">数据质量看板</a>
+          </li>
+          <li nz-menu-item nzMatchRouter (click)="newTab('当前任务进度')">
+            <a routerLink="/progress" (click)="newTab('当前任务进度')" >当前任务进度</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>一致性分析</a>
+          </li>
+          <li nz-menu-item nzMatchRouter (click)="newTab('完整性分析')">
+            <a routerLink="/integrity" (click)="newTab('完整性分析')">完整性分析</a>
+          </li>
+          <li nz-menu-item nzMatchRouter (click)="newTab('冗余度分析')">
+            <a routerLink="/redundancy" (click)="newTab('冗余度分析')">冗余度分析</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </nz-sider>
+  <nz-layout>
+    <nz-header style="background: #fff;">
+      <div class="app-header">
+        <div nz-row>
+          <div nz-col nzSpan="20">
+            <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+              <i class="trigger"
+                 nz-icon
+                 [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+              ></i>
+            </span>
+          </div>
+          <div nz-col nzSpan="4">
+            <nz-avatar nzIcon="user" (click)="showUserInfo()"></nz-avatar>
+            <nz-modal [(nzVisible)]="isVisible" nzTitle="用户信息" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+              <p>Content one</p>
+              <p>Content two</p>
+              <p>Content three</p>
+            </nz-modal>
+          </div>
+        </div>
+        <!--<div style="width:100%;text-align: right">test</div>-->
+      </div>
+
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+
+        <nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate" [nzSelectedIndex]="index">
+          <nz-tab style="width: 100px" *ngFor="let tab of tabs" [nzTitle]="titleTemplate"  >
+            <ng-template #titleTemplate>
+              <div style="margin: auto">
+                {{ tab }}
+                <i nz-icon nzType="close" (click)="closeTab(tab)" class="ant-tabs-close-x"></i>
+              </div>
+              <!--<router-outlet></router-outlet>-->
+            </ng-template>
+            <app-admin *ngIf="tab == '用户管理后台'"></app-admin>
+            <app-database *ngIf="tab == '数据库管理后台'"></app-database>
+            <app-setup *ngIf="tab == '数据资产目录'"></app-setup>
+            <app-welcome *ngIf="tab =='业务数据资产看板'"></app-welcome>
+            <app-dataquality *ngIf="tab == '数据质量看板'"></app-dataquality>
+            <app-progress *ngIf="tab == '当前任务进度'"></app-progress>
+            <app-integrity *ngIf="tab == '完整性分析'"></app-integrity>
+            <app-redundancy *ngIf="tab == '冗余度分析'"></app-redundancy>
+            <!--<router-outlet></router-outlet>-->
+            <!--content of {{tab}}-->
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+
+<ng-template #falsyTemplate>
+  <div class="background-content">
+    <app-login (loginMsg)="getLoginMsg($event)" ></app-login>
+  </div>
+</ng-template>

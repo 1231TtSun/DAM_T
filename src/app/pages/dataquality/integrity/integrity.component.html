@@ -1,0 +1,95 @@
+<mat-card>数据库完整性总览</mat-card>
+<div style="height: 360px">
+ <div echarts [options] = 'option' style="height: 360px;width: 500px;float: left"></div>
+ <div echarts [options] = 'option2' style="height: 360px;width: 500px;float: left;margin-left: 100px"></div>
+</div>
+<mat-card>Detail</mat-card>
+<nz-select
+  style="width: 200px;"
+  nzShowSearch
+  nzAllowClear
+  nzPlaceHolder="Select a database"
+  [(ngModel)]="selectedValue.module_name"
+>
+  <nz-option  nzLabel="pms" nzValue="pms"></nz-option>
+  <nz-option *ngFor='let module_name of aver_integrity.module_name'  nzLabel={{module_name}} nzValue={{module_name}}>{{ module_name }}</nz-option>
+</nz-select>
+
+<nz-select
+  style="width: 200px;"
+  nzShowSearch
+  nzAllowClear
+  nzPlaceHolder="Select a time"
+  [(ngModel)]="selectedValue.result_time"
+>
+  <nz-option nzLabel="history" nzValue="history"></nz-option>
+  <nz-option *ngFor="let result_time of aver_integrity.result_time" nzLabel={{result_time}} nzValue={{result_time}}>{{ result_time }}</nz-option>
+</nz-select>
+
+<form (submit)="onSubmit(selectedValue)" role="form">
+
+  <button type="submit" class="form-control" nz-button nzType="primary">查询</button>
+
+</form>
+
+
+<div  style="margin-top: 5px">
+  <h3>Detail <button nz-button nzType="primary" (click)="open()" style="float: right;" >查看图表</button></h3>
+  <nz-drawer
+    [nzClosable]="false"
+    [nzVisible]="visible"
+    nzPlacement="right"
+    nzTitle="图表"
+    (nzOnClose)="close()"
+    nzWidth="50%"
+  >
+    <div>
+      <div echarts [options]="d_option"  style="height: 420px;width: 500px;"></div>
+    </div>
+  </nz-drawer>
+
+  <div class="scrollable-container">
+    <div *ngFor="let tablelists of d_result_list">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{tablelists['module_name']}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{tablelists['result_time']}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div>
+          <nz-radio-group [(ngModel)]="size">
+            <label nz-radio nzValue="default">默认</label>
+            <label nz-radio nzValue="middle">适中</label>
+            <label nz-radio nzValue="small">小</label>
+          </nz-radio-group>
+          <br />
+          <br />
+          <nz-descriptions nzTitle="详情" nzBordered [nzSize]="size">
+            <nz-descriptions-item nzTitle="列数">{{tablelists.num_cols}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="行数">{{tablelists.num_rows}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="格数">{{tablelists.num_grids}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="空列">{{tablelists.num_null_cols}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="满行">{{tablelists.num_full_rows}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="空格">{{tablelists.num_null_grids}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="满列">{{tablelists.num_full_cols}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="非满行">{{tablelists.num_non_full_rows}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="空格/全表">{{tablelists.rate_null_grids}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="非满列">{{tablelists.num_non_full_cols}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="满行比 ">{{tablelists.rate_full_rows}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="空格/去空列">{{tablelists.rate_null_grids2}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="空列比">{{tablelists.rate_null_cols}}</nz-descriptions-item>
+          </nz-descriptions>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+</div>
+
+
+
+
+

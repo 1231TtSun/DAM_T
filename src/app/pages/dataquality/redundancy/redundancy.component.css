@@ -1,0 +1,140 @@
+table {
+  width: 100%;
+}
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+strong {
+  color: rgba(64, 64, 64, 0.6);
+}
+
+nz-page-header {
+  border: 1px solid rgb(235, 237, 240);
+}
+
+/*table{*/
+/*  text-align: center;*/
+/*}*/
+.mat-sort-header {
+  display:flex;
+  justify-content:center;
+}
+.example-container {
+  margin-top: 2px;
+  height: 560px;
+  overflow: auto;
+}
+.example-container th{
+  /*background-color: lightcyan;*/
+}
+
+/*表头Title*/
+.content-link {
+  border: 1px solid rgb(235, 237, 240);
+}
+.content-link a {
+  color: #000c17;
+  font-size: larger;
+  height: 5%;
+  font-weight:bold;
+  margin-left: 8px;
+  /*vertical-align:middle;*/
+}
+
+/*表相似总览滚轮*/
+.scrollable-container {
+  overflow-y: scroll;
+  float: left;
+  width: 30%;
+  margin-left: 4%;
+  padding-left: 3%;
+  border-radius: 1px;
+  height: 300px;
+}
+.scrollable-container a{
+  padding-left: 3%;
+}
+/*表相似总览图表*/
+.echarts{
+  float: right;
+  width: 30%;
+ margin-left: 4%;
+  height: 300px;
+}
+.echarts1{
+  float: left;
+  width: 30%;
+  height: 300px;
+}
+/*表相似细节*/
+.tabledetail{
+  width: 100%;
+  float: left;
+  margin-top: 2%;
+}
+.tabledetail nz-select{
+  width: 10%;
+  padding-left: 2%;
+  background-color: cornflowerblue;
+}
+form{
+  float: right;
+  margin-right: 70%;
+}
+
+
+
+nb-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  padding-top: 2px;
+  padding-bottom: 8px;
+  font-size: larger;
+  font-weight:bold;
+}
+nb-list {
+  overflow-x: hidden;
+
+}
+.visited-date{
+  flex: 1 0 auto;
+  margin: 5px 6px;
+  padding-bottom: 25px;
+  padding-top: 1px;
+}
+.visited-pages-count,
+.visited-percentages {
+  flex: 1 0 auto;
+  margin: 5px 6px;
+}
+nb-list-item {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  /*margin: 2px 2px;*/
+  /*border-bottom-width: medium;*/
+  /*border-bottom-color: black;*/
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: lightgray;
+}
+.delta {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.down {
+   color: green;
+ }
+
+.up {
+   color: red;
+ }
+
+nb-icon ::ng-deep svg {
+  vertical-align: top;
+}
